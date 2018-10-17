@@ -4,6 +4,7 @@
     <string name="connection_fail">Oops \n Looks like you have connection problems. \n Please, switch on your internet and restart the application.</string>
     <string name="unknown_error">Oops \n Looks like some error occurred and we don\'t know what to do. Sorry. \n Please try to restart the application and hope that everything will be OK this time.</string>
     <string name="loading_text">Wait a moment...</string>
+    <string name="reconnecting_text">Trying to connect...</string>
 
     <string name="created_by_string">Posted by %1$s &lt;br /&gt;in %2$s %3$s ago.</string>
 

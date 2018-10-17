@@ -3,7 +3,6 @@
     android:id="@+id/main_loading_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@id/main_header"
     android:clickable="true"
     android:background="@color/cardview_light_background" >
 

@@ -1,4 +1,4 @@
-package com.lmp.gui
+package com.lmp.view
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,14 +12,10 @@ abstract class PaginationScrollListener(val layoutManager: LinearLayoutManager) 
         val totalItemCount = layoutManager.itemCount
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-        if (!isLoading()) {
-            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
-                loadMoreItems()
-            }
+        if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+            onScrolledToBottom()
         }
     }
 
-    abstract fun loadMoreItems()
-
-    abstract fun isLoading(): Boolean
+    abstract fun onScrolledToBottom()
 }

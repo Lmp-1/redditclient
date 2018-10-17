@@ -1,8 +1,15 @@
 package com.lmp.util
 
 import android.content.res.Resources
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.lmp.redditclient.R
 import java.util.concurrent.TimeUnit
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attach: Boolean = false) : View =
+        LayoutInflater.from(context).inflate(layoutRes, this, attach)
 
 fun Long.formatWithSuffix(): String {
     val value = this
