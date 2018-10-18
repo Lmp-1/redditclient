@@ -28,8 +28,9 @@ class RedditApiWrapper : RedditContract.IRedditModel {
 
         val observable = createObservable(lastBatchFullname ?: "")
 
-        val disposable = observable//.delaySubscription(100, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
+        Log.e("ololo", "loadEntries $lastBatchFullname")
+
+        val disposable = observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe ({
                     result ->
@@ -39,8 +40,6 @@ class RedditApiWrapper : RedditContract.IRedditModel {
                 }, {
                     error ->
                     onError.invoke(error)
-                    Log.e("RedditClient", "RedditApiWrapper error ", error)
-                    //error.printStackTrace()
                     isLoading = false
                 })
 

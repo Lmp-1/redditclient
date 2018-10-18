@@ -21,9 +21,9 @@ interface RedditContract {
 
         fun addDataToView(newItems: List<Entry>)
 
-        fun showLostConnectionText()
+        fun showLostConnectionError()
 
-        fun hideLostConnectionText()
+        fun hideLostConnectionError()
 
         fun showErrorScreen(errorMessage: String?)
 
@@ -37,6 +37,8 @@ interface RedditContract {
         fun detachView()
 
         fun onScrolledToBottom()
+
+        fun onReconnectClicked()
 
         fun onClickedItem(permalink: String)
     }

@@ -11,9 +11,9 @@ import com.lmp.presenter.RedditPresenter
 import com.lmp.view.PaginationScrollListener
 import com.lmp.view.RecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_connection_failed.*
 import kotlinx.android.synthetic.main.main_error_with_message.*
 import kotlinx.android.synthetic.main.main_loading_content.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 
 class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
 
         presenter = RedditPresenter()
         presenter.attachView(this)
+
+        initReconnectButton()
     }
 
     override fun getContext(): Context = this
@@ -40,13 +42,13 @@ class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
     override fun addDataToView(newItems: List<Entry>) {
         adapter.addItems(newItems)
     }
-    
-    override fun showLostConnectionText() {
-        toolbar_text.text = resources.getString(R.string.reconnecting_text)
+
+    override fun showLostConnectionError() {
+        main_connection_failed.visibility = View.VISIBLE
     }
 
-    override fun hideLostConnectionText() {
-        toolbar_text.text = resources.getString(R.string.app_header)
+    override fun hideLostConnectionError() {
+        main_connection_failed.visibility = View.GONE
     }
 
     override fun showErrorScreen(errorMessage: String?) {
@@ -81,8 +83,12 @@ class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
         presenter.onClickedItem(permalink)
     }
 
-    override fun onStop() {
+    private fun initReconnectButton() {
+        main_retry_button.setOnClickListener { view -> presenter.onReconnectClicked() }
+    }
+
+    override fun onDestroy() {
         presenter.detachView()
-        super.onStop()
+        super.onDestroy()
     }
 }

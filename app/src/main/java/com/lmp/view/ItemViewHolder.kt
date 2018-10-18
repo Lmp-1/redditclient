@@ -9,10 +9,7 @@ import android.view.ViewGroup
 import com.lmp.model.Entry
 import com.lmp.model.EntryData
 import com.lmp.redditclient.R
-import com.lmp.util.formatMillisAsBiggestTimeUnit
-import com.lmp.util.formatWithSuffix
-import com.lmp.util.inflate
-import com.lmp.util.setBold
+import com.lmp.util.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.cardview_item.*
@@ -46,11 +43,11 @@ class ItemViewHolder(override val containerView: View, private val click: (Strin
                 data.subreddit.setBold(),
                 formatTimeCreated(data.created, resources))
 
-        // We don't want to create separate textviews for each field and make some of them bold
-        // by adding textStyle="bold" because we don't want to create excess objects in our app.
+        // We don't want to create separate textviews for each field and make some of them bold by
+        // adding textStyle="bold" because we don't want to create excess objects in our app.
         // But also we can't add <b></b> tags to named variables in strings.xml
         // So we are forced to add bold tags here and use Html.fromHtml()
-        created_by_text.text = Html.fromHtml(authorAndSubredditText)
+        created_by_text.text = authorAndSubredditText.fromHtml()
     }
 
     private fun formatTimeCreated(time: Long, resources: Resources) : String =
@@ -64,7 +61,7 @@ class ItemViewHolder(override val containerView: View, private val click: (Strin
         } else {
             // If there are lots of comments, we format this to look like '25.3k' or '3.0M' like
             // it is made on reddit and always use plural number, so I just typed '9999' in quantity field.
-            // I could use just 999 or 1005 or almost any other plural number, but to point out
+            // I could use just 999 or 1006 or almost any other plural number, but to point out
             // that this is really a lot, I used 9999 because, you know, it's "OVER NINE THOUSAAAAAAND!" (c)
             num_comments.text = resources.getQuantityString(R.plurals.number_of_comments, 9999, numberOfComments.formatWithSuffix())
         }

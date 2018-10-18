@@ -14,12 +14,17 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"/>
 
-    <include layout="@layout/main_error_with_message"
+    <include layout="@layout/main_loading_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"/>
 
-    <include layout="@layout/main_loading_content"
+    <include layout="@layout/main_connection_failed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"/>
+
+    <include layout="@layout/main_error_with_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"/>

@@ -24,9 +24,11 @@ class RedditPresenter : RedditContract.IRedditPresenter {
     }
 
     override fun onScrolledToBottom() {
-        if (!model.isLoading()) {
-            model.loadEntries(::onSuccess, ::onError)
-        }
+        loadEntriesSecure()
+    }
+
+    override fun onReconnectClicked() {
+        loadEntriesSecure()
     }
 
     override fun onClickedItem(permalink: String) {
@@ -42,29 +44,23 @@ class RedditPresenter : RedditContract.IRedditPresenter {
 
     private fun onSuccess(response: EntriesResponse) {
         view?.addDataToView(response.data.children)
-        view?.hideLostConnectionText()
+        view?.hideLostConnectionError()
         view?.hideInitialLoader()
     }
 
     private fun onError(error: Throwable) {
         if (error is UnknownHostException) {
-            view?.showLostConnectionText()
-            reconnect()
+            view?.showLostConnectionError()
         } else {
             view?.showErrorScreen(error.message)
             view?.hideInitialLoader()
         }
     }
 
-    private fun reconnect() {
-        object : Thread() {
-            override fun run() {
-                Thread.sleep(1000L)
-                if (!model.isLoading()) {
-                    model.loadEntries(::onSuccess, ::onError)
-                }
-            }
-        }.start()
+    private fun loadEntriesSecure() {
+        if (!model.isLoading()) {
+            model.loadEntries(::onSuccess, ::onError)
+        }
     }
 
     private fun createFullUrl(permalink: String) : String = "https://www.reddit.com$permalink"
