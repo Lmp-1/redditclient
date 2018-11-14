@@ -1,15 +1,12 @@
 package com.lmp.model
 
-import android.util.Log
 import com.lmp.presenter.RedditContract
-import com.lmp.redditclient.App.ApiManager.redditService
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
-class RedditApiWrapper : RedditContract.IRedditModel {
+class RedditApiWrapper (private val retrofitApi: RetrofitApiWrapper) : RedditContract.IRedditModel {
 
     private var lastBatchFullname: String? = null
     private var isLoading: Boolean = false
@@ -17,24 +14,22 @@ class RedditApiWrapper : RedditContract.IRedditModel {
 
     private fun createObservable(lastBatchFullname: String) : Observable<EntriesResponse> {
         return if (lastBatchFullname.isBlank()) {
-             redditService.getFirstBatch()
+            retrofitApi.redditService.getFirstBatch()
         } else {
-            redditService.getNextBatch(lastBatchFullname)
+            retrofitApi.redditService.getNextBatch(lastBatchFullname)
         }
     }
 
-    override fun loadEntries(onSuccess: (EntriesResponse) -> Unit, onError: (Throwable) -> Unit) {
+    override fun loadEntries(onSuccess: (List<EntryData>) -> Unit, onError: (Throwable) -> Unit) {
         isLoading = true
 
         val observable = createObservable(lastBatchFullname ?: "")
-
-        Log.e("ololo", "loadEntries $lastBatchFullname")
 
         val disposable = observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe ({
                     result ->
-                    onSuccess.invoke(result)
+                    onSuccess.invoke(result.data.children.map { it.data })
                     lastBatchFullname = result.data.after
                     isLoading = false
                 }, {

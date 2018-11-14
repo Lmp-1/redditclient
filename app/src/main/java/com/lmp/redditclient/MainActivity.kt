@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.lmp.model.Entry
+import com.lmp.model.EntryData
 import com.lmp.presenter.RedditContract
-import com.lmp.presenter.RedditPresenter
 import com.lmp.view.PaginationScrollListener
 import com.lmp.view.RecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_connection_failed.*
 import kotlinx.android.synthetic.main.main_error_with_message.*
 import kotlinx.android.synthetic.main.main_loading_content.*
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
 
-    private lateinit var presenter: RedditContract.IRedditPresenter
+    private val presenter: RedditContract.IRedditPresenter by inject()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: RecyclerViewAdapter
@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
         initAdapter()
         initScrollListener()
 
-        presenter = RedditPresenter()
         presenter.attachView(this)
 
         initReconnectButton()
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity(), RedditContract.IRedditView {
 
     override fun getContext(): Context = this
 
-    override fun addDataToView(newItems: List<Entry>) {
+    override fun addDataToView(newItems: List<EntryData>) {
         adapter.addItems(newItems)
     }
 

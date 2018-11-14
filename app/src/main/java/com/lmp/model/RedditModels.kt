@@ -1,6 +1,7 @@
 package com.lmp.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
 
 data class EntriesResponse (val data: ResponseData)
@@ -25,4 +26,4 @@ data class EntryData (
         val numComments: Long,
         val thumbnail: String,
         val permalink: String
-)
+) : RealmObject()

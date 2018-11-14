@@ -3,14 +3,11 @@ package com.lmp.presenter
 import android.graphics.Color
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
-import android.util.Log
-import com.lmp.model.EntriesResponse
-import com.lmp.model.RedditApiWrapper
+import com.lmp.model.EntryData
 import java.net.UnknownHostException
 
-class RedditPresenter : RedditContract.IRedditPresenter {
+class RedditPresenter(private val model: RedditContract.IRedditModel) : RedditContract.IRedditPresenter {
 
-    private val model: RedditContract.IRedditModel = RedditApiWrapper()
     private var view: RedditContract.IRedditView? = null
 
     override fun attachView(view: RedditContract.IRedditView) {
@@ -42,8 +39,8 @@ class RedditPresenter : RedditContract.IRedditPresenter {
         }
     }
 
-    private fun onSuccess(response: EntriesResponse) {
-        view?.addDataToView(response.data.children)
+    private fun onSuccess(data: List<EntryData>) {
+        view?.addDataToView(data)
         view?.hideLostConnectionError()
         view?.hideInitialLoader()
     }

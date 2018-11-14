@@ -3,10 +3,8 @@ package com.lmp.view
 import android.content.Context
 import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.view.View
 import android.view.ViewGroup
-import com.lmp.model.Entry
 import com.lmp.model.EntryData
 import com.lmp.redditclient.R
 import com.lmp.util.*
@@ -22,8 +20,7 @@ class ItemViewHolder(override val containerView: View, private val click: (Strin
                 ItemViewHolder(parent.inflate(R.layout.cardview_item), click)
     }
 
-    fun setData(model: Entry, context: Context) {
-        val data = model.data
+    fun setData(data: EntryData, context: Context) {
         val resources = context.resources
         title.text = data.title
         score.text = data.score.formatWithSuffix()

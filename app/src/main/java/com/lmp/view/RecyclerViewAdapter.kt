@@ -3,7 +3,7 @@ package com.lmp.view
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.lmp.model.Entry
+import com.lmp.model.EntryData
 
 class RecyclerViewAdapter(private val context: Context, private val click: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -12,7 +12,7 @@ class RecyclerViewAdapter(private val context: Context, private val click: (Stri
         private const val FOOTER: Int = 1
     }
 
-    private val items = mutableListOf<Entry>()
+    private val items = mutableListOf<EntryData>()
 
     private lateinit var footerViewHolder: FooterViewHolder
     private var isFooterAdded = true
@@ -45,7 +45,7 @@ class RecyclerViewAdapter(private val context: Context, private val click: (Stri
 
     override fun getItemCount() = items.size
 
-    fun addItems(newItems: List<Entry>) {
+    fun addItems(newItems: List<EntryData>) {
         if (newItems.isNotEmpty()) {
             val lastPosition = items.size
             items.addAll(newItems)

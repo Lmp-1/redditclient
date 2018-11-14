@@ -1,14 +1,12 @@
 package com.lmp.presenter
 
 import android.content.Context
-import com.lmp.model.EntriesResponse
-import com.lmp.model.Entry
-import java.util.concurrent.TimeUnit
+import com.lmp.model.EntryData
 
 interface RedditContract {
 
     interface IRedditModel {
-        fun loadEntries(onSuccess: (EntriesResponse) -> Unit, onError: (Throwable) -> Unit)
+        fun loadEntries(onSuccess: (List<EntryData>) -> Unit, onError: (Throwable) -> Unit)
 
         fun isLoading() : Boolean
 
@@ -19,7 +17,7 @@ interface RedditContract {
 
         fun getContext() : Context
 
-        fun addDataToView(newItems: List<Entry>)
+        fun addDataToView(newItems: List<EntryData>)
 
         fun showLostConnectionError()
 
